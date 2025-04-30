@@ -1,13 +1,5 @@
 package br.com.ruanperondi.webhooks.domain.entity;
 
-import br.com.ruanperondi.webhooks.domain.exceptions.WebhookException;
-import lombok.*;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Map;
@@ -15,6 +7,18 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.collections4.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import br.com.ruanperondi.webhooks.domain.exceptions.WebhookAuthorizationException;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.ToString;
 
 @Getter
 @Builder
@@ -68,20 +72,20 @@ public final class WebhookClient {
 
     public void ensureRequestIsAuthentic(Map<String, Object> headers, String payload) {
         if (MapUtils.isEmpty(headers)) {
-            throw new WebhookException("Headers cannot be null or empty");
+            throw new WebhookAuthorizationException("Headers cannot be null or empty");
         }
 
         if (StringUtils.isBlank(payload)) {
-            throw new WebhookException("Payload cannot be null or empty");
+            throw new WebhookAuthorizationException("Payload cannot be null or empty");
         }
 
         if (!headers.containsKey(headerKey)) {
-            throw new WebhookException("Header key not found in headers");
+            throw new WebhookAuthorizationException("Header key not found in headers");
         }
 
         Object headerValue = headers.get(headerKey);
         if (!(headerValue instanceof String header)) {
-            throw new WebhookException("Header value must be a string");
+            throw new WebhookAuthorizationException("Header value must be a string");
         }
 
         Map<String, String> parsed = parseHeader(header);
@@ -90,15 +94,15 @@ public final class WebhookClient {
         String signature = parsed.get(signatureHeaderKey);
 
         if (StringUtils.isBlank(timestamp) || StringUtils.isBlank(signature)) {
-            throw new WebhookException("Missing timestamp or signature");
+            throw new WebhookAuthorizationException("Missing timestamp or signature");
         }
 
         if (!isValidTimestamp(timestamp)) {
-            throw new WebhookException("Invalid timestamp format or expired");
+            throw new WebhookAuthorizationException("Invalid timestamp format or expired");
         }
 
         if (!isValidSignature(signature, payload, timestamp)) {
-            throw new WebhookException("Signature verification failed");
+            throw new WebhookAuthorizationException("Signature verification failed");
         }
     }
 
@@ -110,7 +114,7 @@ public final class WebhookClient {
                     .filter(kv -> kv.length == 2)
                     .collect(Collectors.toMap(kv -> kv[0], kv -> kv[1]));
         } catch (Exception e) {
-            throw new WebhookException("Invalid header format", e);
+            throw new WebhookAuthorizationException("Invalid header format", e);
         }
     }
 
@@ -128,7 +132,7 @@ public final class WebhookClient {
             byte[] hash = hmacSha256.doFinal(data.getBytes(StandardCharsets.UTF_8));
             return Hex.encodeHexString(hash);
         } catch (Exception e) {
-            throw new WebhookException("Failed to generate HMAC signature", e);
+            throw new WebhookAuthorizationException("Failed to generate HMAC signature", e);
         }
     }
 
