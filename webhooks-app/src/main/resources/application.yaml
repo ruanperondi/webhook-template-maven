@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: webhooks
+  datasource:
+    url: jdbc:h2:mem:webhooks
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  flyway:
+    url: jdbc:h2:mem:webhooks
+    user: sa
+    password:
+    enabled: true
+    locations: classpath:db/migrations
+
+stripe:
+  secret: ${STRIPE_SECRET:1234567890}
