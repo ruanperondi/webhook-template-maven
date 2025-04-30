@@ -13,5 +13,14 @@ spring:
     enabled: true
     locations: classpath:db/migrations
 
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    tryItOutEnabled: true
+
 stripe:
   secret: ${STRIPE_SECRET:1234567890}
