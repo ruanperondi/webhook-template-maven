@@ -6,6 +6,11 @@ import br.com.ruanperondi.webhooks.adapters.persistence.entity.WebhookClientJPAE
 import br.com.ruanperondi.webhooks.adapters.persistence.mapper.WebhookClientMapper;
 import br.com.ruanperondi.webhooks.domain.entity.WebhookClient;
 
+/**
+ * Implementation of WebhookClientMapper interface.
+ * Provides concrete mapping logic between WebhookClient domain entities and JPA entities.
+ * Handles conversion of all fields and ensures data integrity during mapping.
+ */
 @Component
 public class WebhookClientMapperImpl implements WebhookClientMapper {
 

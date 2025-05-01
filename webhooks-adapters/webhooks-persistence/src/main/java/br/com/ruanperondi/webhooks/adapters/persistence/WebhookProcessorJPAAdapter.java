@@ -16,6 +16,14 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * JPA adapter implementation for persisting webhook events.
+ * This class is responsible for:
+ * - Converting domain events to JPA entities
+ * - Persisting events in the database
+ * - Handling any persistence errors gracefully
+ * - Providing audit information for all webhook events
+ */
 @Component
 @RequiredArgsConstructor
 @Slf4j

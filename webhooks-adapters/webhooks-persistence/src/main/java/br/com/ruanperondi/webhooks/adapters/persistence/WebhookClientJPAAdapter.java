@@ -11,6 +11,11 @@ import br.com.ruanperondi.webhooks.domain.entity.WebhookClient;
 import br.com.ruanperondi.webhooks.domain.ports.RetrieveClientPort;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Adapter implementation for retrieving webhook clients from the persistence
+ * layer. This class is responsible for: - Retrieving a webhook client by its
+ * unique identifier
+ */
 @Component
 @RequiredArgsConstructor
 public class WebhookClientJPAAdapter implements RetrieveClientPort {
