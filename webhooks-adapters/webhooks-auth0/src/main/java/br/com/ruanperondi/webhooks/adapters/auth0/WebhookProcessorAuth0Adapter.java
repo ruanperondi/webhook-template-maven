@@ -13,6 +13,14 @@ import br.com.ruanperondi.webhooks.domain.ports.WebhookProcessorPort;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Adapter implementation for processing Auth0 webhook events.
+ * This class is responsible for:
+ * - Receiving raw webhook payloads
+ * - Converting them to Auth0Event objects
+ * - Routing events to appropriate consumers based on event type
+ * - Handling any processing errors gracefully
+ */
 @RequiredArgsConstructor
 @Slf4j
 public class WebhookProcessorAuth0Adapter implements WebhookProcessorPort {

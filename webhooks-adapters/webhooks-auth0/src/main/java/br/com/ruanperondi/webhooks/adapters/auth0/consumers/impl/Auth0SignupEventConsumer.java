@@ -6,6 +6,11 @@ import br.com.ruanperondi.webhooks.adapters.auth0.domain.Auth0Event;
 import br.com.ruanperondi.webhooks.adapters.auth0.domain.Auth0EventType;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Consumer implementation for Auth0 signup events. This consumer handles events
+ * triggered when a new user signs up through Auth0. It is bound to the SIGNUP
+ * event type using the @Auth0EventBind annotation.
+ */
 @Auth0EventBind(Auth0EventType.SIGNUP)
 @Slf4j
 public class Auth0SignupEventConsumer implements Auth0EventConsumer {

@@ -6,6 +6,11 @@ import br.com.ruanperondi.webhooks.adapters.auth0.domain.Auth0Event;
 import br.com.ruanperondi.webhooks.adapters.auth0.domain.Auth0EventType;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Consumer implementation for Auth0 login events. This consumer handles events
+ * triggered when a user successfully logs in to Auth0. It is bound to the LOGIN
+ * event type using the @Auth0EventBind annotation.
+ */
 @Auth0EventBind(Auth0EventType.LOGIN)
 @Slf4j
 public class Auth0LoginEventConsumer implements Auth0EventConsumer {

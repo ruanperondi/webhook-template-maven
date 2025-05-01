@@ -7,6 +7,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Represents an Auth0 webhook event. This class models the structure of events
+ * received from Auth0 webhooks, including the event type and associated data.
+ * Uses snake_case naming strategy for JSON serialization/deserialization.
+ */
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 @Getter
 @Setter
